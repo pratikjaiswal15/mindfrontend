@@ -1,0 +1,179 @@
+<h3> All Emplyoees in the database </h3>
+<button class="btn btn-dark float-right" (click)="open(content, null)">Add employee</button>
+<!-- <button class="btn btn-dark float-left" (click)="logout()">Logout</button> -->
+
+<br>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Emplyoee Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Mobile Number</th>
+            <th scope="col">Date of birth</th>
+            <th scope="col">Address</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let emp of emp_list">
+            <td>{{emp._id}}</td>
+            <td>{{emp.first_name}} {{emp.last_name}}</td>
+            <td>{{emp.email}}</td>
+            <td>{{emp.mobile_number}}</td>
+            <td>{{emp.dob}}</td>
+            <td>{{emp.city}} {{emp.address}}</td>
+            <td><button class="btn btn-dark" (click)="open(content,emp) ">Edit</button> </td>
+            <td> <button class="btn btn-dark" (click)="delete_modal(del,emp._id)"> delete</button></td>
+
+        </tr>
+
+    </tbody>
+</table>
+
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Employeee details</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="empForm">
+            <div class="form-group">
+                <div class="form-group">
+                    <label>Enter employee First name</label>
+                    <input [class.is-invalid]="first_name?.invalid && first_name?.touched" formControlName="first_name"
+                        type="text" class="form-control" placeholder="Enter employee first name">
+
+                    <div *ngIf="first_name?.invalid && first_name?.touched">
+                        <small *ngIf="first_name?.errors?.required" class="text-danger"> First name is
+                            required</small>
+                        <small *ngIf="first_name?.errors?.minlength" class="text-danger"> Enter valid first name
+                        </small>
+                        <small *ngIf="first_name?.errors?.pattern" class="text-danger"> Enter valid first name
+                        </small>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label>Enter employee Last name</label>
+                <input [class.is-invalid]="last_name?.invalid && last_name?.touched" formControlName="last_name"
+                    type="text" class="form-control" placeholder="Enter employee last name">
+
+                <div *ngIf="last_name?.invalid && last_name?.touched">
+                    <small *ngIf="last_name?.errors?.required" class="text-danger"> Last name is required</small>
+                    <small *ngIf="last_name?.errors?.minlength" class="text-danger"> Enter valid last name </small>
+                    <small *ngIf="last_name?.errors?.pattern" class="text-danger"> Enter valid last name </small>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Enter employee Email</label>
+                <input [class.is-invalid]="email?.invalid && email?.touched" formControlName="email" type="text"
+                    class="form-control" placeholder="Enter your email">
+
+                <div *ngIf="email?.invalid && email?.touched">
+                    <small *ngIf="email?.errors?.required" class="text-danger"> Email is required</small>
+                    <small *ngIf="email?.errors?.minlength" class="text-danger"> Enter valid email </small>
+                    <small *ngIf="email?.errors?.pattern" class="text-danger"> Enter valid email </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Enter employee Mobile number</label>
+                <input [class.is-invalid]="mobile_number?.invalid && mobile_number?.touched"
+                    formControlName="mobile_number" type="text" class="form-control"
+                    placeholder="Enter emplyoee mobile_number">
+
+                <div *ngIf="mobile_number?.invalid && mobile_number?.touched">
+                    <small *ngIf="mobile_number?.errors?.required" class="text-danger"> mobile number is
+                        required</small>
+                    <small *ngIf="mobile_number?.errors?.minlength" class="text-danger"> Enter valid mobile number
+                    </small>
+                    <small *ngIf="mobile_number?.errors?.pattern" class="text-danger"> Enter valid mobile number
+                    </small>
+                    <small *ngIf="mobile_number?.errors?.maxlength" class="text-danger"> Enter valid mobile number
+                    </small>
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="birthday">Date of birth </label>
+                <input [class.is-invalid]="dob?.invalid && dob?.touched" type="date" id="birthday" name="birthday"
+                    formControlName="dob" class="form-control">
+
+                <div *ngIf="dob?.invalid && dob?.touched">
+                    <small *ngIf="dob?.errors?.required" class="text-danger"> DOB is required</small>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label>Enter Address</label>
+                <input [class.is-invalid]="address?.invalid && address?.touched" formControlName="address" type="text"
+                    class="form-control" placeholder="Enter address">
+
+                <div *ngIf="address?.invalid && address?.touched">
+                    <small *ngIf="address?.errors?.required" class="text-danger"> address is required</small>
+                    <small *ngIf="address?.errors?.pattern" class="text-danger"> Enter a valid address </small>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Enter city name</label>
+                <input [class.is-invalid]="city?.invalid && city?.touched" formControlName="city" type="text"
+                    class="form-control" placeholder="Enter city name">
+
+                <div *ngIf="city?.invalid && city?.touched">
+                    <small *ngIf="city?.errors?.required" class="text-danger"> city name is required</small>
+                    <small *ngIf="city?.errors?.pattern" class="text-danger"> Enter a valid city name </small>
+
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="save(empForm.value, emp_id)">Save</button>
+    </div>
+</ng-template>
+
+
+<ng-template #del let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div>ARe you sure you want to Delete this record?</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+        <button type="button" class="btn btn-outline-dark" (click)="delete(emp_id)">Delete</button>
+    </div>
+</ng-template>
+
+
+<br>
+
